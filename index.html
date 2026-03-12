@@ -1,0 +1,1211 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gewissenserforschung – Ignatianische Spiritualität</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;1,300;1,400&family=Cinzel:wght@400;500&family=EB+Garamond:ital,wght@0,400;1,400&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --gold: #c9a84c;
+    --gold-light: #e8c97a;
+    --gold-pale: #f5e9c8;
+    --ink: #1a1410;
+    --parchment: #f7f1e3;
+    --parchment-dark: #ede3cc;
+    --brown: #4a3728;
+    --brown-light: #7a6050;
+    --red-accent: #8b2e2e;
+    --shadow: rgba(26,20,16,0.15);
+  }
+
+  * { margin: 0; padding: 0; box-sizing: border-box; }
+
+  body {
+    font-family: 'Cormorant Garamond', Georgia, serif;
+    background: var(--ink);
+    color: var(--ink);
+    min-height: 100vh;
+    overflow-x: hidden;
+  }
+
+  /* ── BACKGROUND ── */
+  .bg-texture {
+    position: fixed; inset: 0; z-index: 0;
+    background:
+      radial-gradient(ellipse 80% 60% at 50% 0%, #2e200f 0%, #0e0a06 60%),
+      url("data:image/svg+xml,%3Csvg width='200' height='200' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='200' height='200' filter='url(%23n)' opacity='0.08'/%3E%3C/svg%3E");
+    background-blend-mode: normal, overlay;
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+    display: flex; align-items: center; justify-content: center; gap: 0;
+    padding: 0;
+    background: linear-gradient(180deg, rgba(14,10,6,0.98) 0%, rgba(14,10,6,0.85) 100%);
+    border-bottom: 1px solid rgba(201,168,76,0.3);
+    backdrop-filter: blur(8px);
+  }
+
+  .nav-btn {
+    flex: 1; max-width: 320px;
+    padding: 18px 28px;
+    background: none; border: none;
+    font-family: 'Cinzel', serif; font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.18em; text-transform: uppercase;
+    color: rgba(201,168,76,0.55);
+    cursor: pointer; transition: all 0.35s ease;
+    position: relative;
+  }
+  .nav-btn::after {
+    content: ''; position: absolute; bottom: 0; left: 20%; right: 20%;
+    height: 2px; background: var(--gold);
+    transform: scaleX(0); transition: transform 0.35s ease;
+  }
+  .nav-btn.active { color: var(--gold); }
+  .nav-btn.active::after { transform: scaleX(1); }
+  .nav-btn:hover { color: var(--gold-light); }
+
+  .nav-divider {
+    width: 1px; height: 24px;
+    background: rgba(201,168,76,0.2);
+  }
+
+  /* ── PAGES ── */
+  .page {
+    position: relative; z-index: 1;
+    min-height: 100vh; padding-top: 70px;
+    display: none; opacity: 0; transition: opacity 0.5s ease;
+  }
+  .page.active { display: block; opacity: 1; }
+
+  /* ── PAGE 1 – IGNATIAN ── */
+  .page1-hero {
+    text-align: center;
+    padding: 70px 20px 50px;
+    position: relative;
+  }
+
+  .cross-ornament {
+    font-size: 1.8rem; color: var(--gold);
+    opacity: 0.6; display: block;
+    margin-bottom: 20px;
+    animation: glow 3s ease-in-out infinite;
+  }
+  @keyframes glow {
+    0%,100% { text-shadow: 0 0 10px rgba(201,168,76,0.3); }
+    50% { text-shadow: 0 0 30px rgba(201,168,76,0.7), 0 0 60px rgba(201,168,76,0.3); }
+  }
+
+  .page1-hero h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.5rem, 4vw, 2.8rem);
+    font-weight: 400; color: var(--gold);
+    letter-spacing: 0.12em;
+    line-height: 1.3;
+    margin-bottom: 12px;
+  }
+
+  .page1-hero .subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.15rem;
+    color: rgba(245,233,200,0.6);
+    letter-spacing: 0.05em;
+    margin-bottom: 40px;
+  }
+
+  .divider-ornament {
+    display: flex; align-items: center; justify-content: center;
+    gap: 14px; margin: 30px auto;
+    max-width: 400px;
+  }
+  .divider-ornament::before,
+  .divider-ornament::after {
+    content: ''; flex: 1;
+    height: 1px; background: linear-gradient(90deg, transparent, var(--gold), transparent);
+  }
+  .divider-ornament span { color: var(--gold); font-size: 0.9rem; }
+
+  .content-scroll {
+    max-width: 780px; margin: 0 auto;
+    padding: 0 24px 80px;
+  }
+
+  .parchment-card {
+    background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+    border: 1px solid rgba(201,168,76,0.4);
+    border-radius: 2px;
+    padding: 40px 44px;
+    margin-bottom: 36px;
+    box-shadow: 0 8px 40px rgba(0,0,0,0.4), inset 0 1px 0 rgba(255,255,255,0.5);
+    position: relative;
+    animation: fadeUp 0.6s ease both;
+  }
+  .parchment-card::before {
+    content: '';
+    position: absolute; top: 8px; left: 8px; right: 8px; bottom: 8px;
+    border: 1px solid rgba(201,168,76,0.15);
+    border-radius: 2px; pointer-events: none;
+  }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(20px); }
+    to { opacity: 1; transform: translateY(0); }
+  }
+
+  .parchment-card h2 {
+    font-family: 'Cinzel', serif;
+    font-size: 1.05rem; font-weight: 500;
+    color: var(--brown); letter-spacing: 0.1em;
+    text-transform: uppercase; margin-bottom: 18px;
+  }
+  .parchment-card p {
+    font-size: 1.08rem; line-height: 1.85;
+    color: var(--brown); font-weight: 400;
+  }
+  .parchment-card p + p { margin-top: 14px; }
+
+  /* Examen Steps */
+  .examen-steps { list-style: none; }
+  .examen-step {
+    display: flex; gap: 22px; align-items: flex-start;
+    padding: 22px 0; border-bottom: 1px solid rgba(74,55,40,0.12);
+    animation: fadeUp 0.5s ease both;
+  }
+  .examen-step:last-child { border-bottom: none; }
+  .examen-step:nth-child(1) { animation-delay: 0.1s; }
+  .examen-step:nth-child(2) { animation-delay: 0.2s; }
+  .examen-step:nth-child(3) { animation-delay: 0.3s; }
+  .examen-step:nth-child(4) { animation-delay: 0.4s; }
+  .examen-step:nth-child(5) { animation-delay: 0.5s; }
+
+  .step-number {
+    min-width: 44px; height: 44px;
+    background: var(--brown);
+    color: var(--gold-light);
+    font-family: 'Cinzel', serif;
+    font-size: 1.1rem; font-weight: 500;
+    display: flex; align-items: center; justify-content: center;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+    flex-shrink: 0;
+  }
+
+  .step-content h3 {
+    font-family: 'Cinzel', serif;
+    font-size: 0.9rem; letter-spacing: 0.1em;
+    color: var(--brown); text-transform: uppercase;
+    margin-bottom: 7px;
+  }
+  .step-content p {
+    font-size: 1rem; line-height: 1.7;
+    color: var(--brown-light);
+  }
+
+  .latin-quote {
+    font-style: italic;
+    color: var(--red-accent) !important;
+    font-size: 1.15rem !important;
+    text-align: center;
+    margin: 20px 0 !important;
+  }
+
+  /* ── PAGE 2 – QUESTIONS ── */
+  .page2-inner {
+    max-width: 820px; margin: 0 auto;
+    padding: 50px 24px 80px;
+  }
+
+  .page2-header {
+    text-align: center; margin-bottom: 48px;
+  }
+  .page2-header h1 {
+    font-family: 'Cinzel', serif;
+    font-size: clamp(1.3rem, 3.5vw, 2.2rem);
+    font-weight: 400; color: var(--gold);
+    letter-spacing: 0.1em; margin-bottom: 10px;
+  }
+  .page2-header p {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.05rem;
+    color: rgba(245,233,200,0.5);
+  }
+
+  /* Config Panel */
+  .config-panel {
+    background: linear-gradient(135deg, rgba(245,233,200,0.06) 0%, rgba(245,233,200,0.02) 100%);
+    border: 1px solid rgba(201,168,76,0.2);
+    border-radius: 4px;
+    padding: 36px 40px;
+    margin-bottom: 36px;
+  }
+
+  .config-row {
+    display: flex; flex-wrap: wrap; gap: 36px;
+    margin-bottom: 32px;
+  }
+  .config-group { flex: 1; min-width: 200px; }
+
+  .config-label {
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem; letter-spacing: 0.15em;
+    text-transform: uppercase; color: var(--gold);
+    display: block; margin-bottom: 14px;
+  }
+
+  .slider-wrapper {
+    position: relative;
+  }
+  .slider-track {
+    display: flex; align-items: center; gap: 14px;
+  }
+  input[type=range] {
+    -webkit-appearance: none; appearance: none;
+    flex: 1; height: 3px;
+    background: linear-gradient(90deg, var(--gold) var(--pct, 50%), rgba(201,168,76,0.2) var(--pct, 50%));
+    border-radius: 2px; outline: none; cursor: pointer;
+  }
+  input[type=range]::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    width: 18px; height: 18px;
+    background: var(--gold);
+    border-radius: 50%;
+    box-shadow: 0 0 0 3px rgba(201,168,76,0.2), 0 2px 6px rgba(0,0,0,0.4);
+    transition: box-shadow 0.2s;
+  }
+  input[type=range]::-webkit-slider-thumb:hover {
+    box-shadow: 0 0 0 5px rgba(201,168,76,0.3), 0 2px 8px rgba(0,0,0,0.5);
+  }
+  .slider-value {
+    font-family: 'Cinzel', serif;
+    font-size: 1.3rem; color: var(--gold);
+    min-width: 54px; text-align: right;
+  }
+
+  .slider-labels {
+    display: flex; justify-content: space-between;
+    margin-top: 8px;
+    font-size: 0.75rem; color: rgba(201,168,76,0.4);
+    font-family: 'Cinzel', serif; letter-spacing: 0.08em;
+  }
+
+  /* Speech toggle */
+  .speech-toggle {
+    display: flex; align-items: center; gap: 14px;
+    margin-bottom: 0;
+  }
+  .toggle-switch {
+    position: relative; width: 52px; height: 26px;
+    cursor: pointer;
+  }
+  .toggle-switch input { display: none; }
+  .toggle-track {
+    position: absolute; inset: 0;
+    background: rgba(201,168,76,0.15);
+    border: 1px solid rgba(201,168,76,0.3);
+    border-radius: 13px;
+    transition: all 0.3s ease;
+  }
+  .toggle-thumb {
+    position: absolute; top: 3px; left: 3px;
+    width: 18px; height: 18px;
+    background: rgba(201,168,76,0.5);
+    border-radius: 50%;
+    transition: all 0.3s ease;
+  }
+  .toggle-switch input:checked ~ .toggle-track { background: rgba(201,168,76,0.25); border-color: var(--gold); }
+  .toggle-switch input:checked ~ .toggle-track .toggle-thumb { left: 29px; background: var(--gold); }
+  .toggle-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1rem; color: rgba(245,233,200,0.7);
+  }
+
+  /* Start Button */
+  .btn-start {
+    width: 100%; padding: 18px 32px;
+    background: linear-gradient(135deg, var(--brown) 0%, #2e1f14 100%);
+    border: 1px solid var(--gold);
+    color: var(--gold);
+    font-family: 'Cinzel', serif;
+    font-size: 0.85rem; letter-spacing: 0.2em;
+    text-transform: uppercase; cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.3s ease;
+    position: relative; overflow: hidden;
+  }
+  .btn-start::before {
+    content: ''; position: absolute; inset: 0;
+    background: linear-gradient(135deg, rgba(201,168,76,0.1) 0%, rgba(201,168,76,0.05) 100%);
+    opacity: 0; transition: opacity 0.3s;
+  }
+  .btn-start:hover { box-shadow: 0 0 20px rgba(201,168,76,0.2); }
+  .btn-start:hover::before { opacity: 1; }
+
+  /* ── QUESTION DISPLAY ── */
+  #question-view { display: none; }
+
+  .q-progress-bar {
+    height: 2px;
+    background: rgba(201,168,76,0.15);
+    margin-bottom: 40px; border-radius: 1px; overflow: hidden;
+  }
+  .q-progress-fill {
+    height: 100%;
+    background: linear-gradient(90deg, var(--gold), var(--gold-light));
+    border-radius: 1px;
+    transition: width 0.5s ease;
+  }
+
+  .q-meta {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-bottom: 30px;
+  }
+  .q-counter {
+    font-family: 'Cinzel', serif;
+    font-size: 0.75rem; letter-spacing: 0.15em;
+    color: rgba(201,168,76,0.5);
+  }
+  .q-category {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 0.9rem;
+    color: rgba(201,168,76,0.6);
+  }
+
+  .question-card {
+    background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+    border: 1px solid rgba(201,168,76,0.5);
+    border-radius: 2px;
+    padding: 52px 52px;
+    min-height: 220px;
+    display: flex; flex-direction: column;
+    align-items: center; justify-content: center;
+    text-align: center;
+    box-shadow: 0 12px 60px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.6);
+    position: relative;
+    margin-bottom: 32px;
+    animation: questionIn 0.6s ease;
+  }
+  @keyframes questionIn {
+    from { opacity: 0; transform: scale(0.97) translateY(10px); }
+    to { opacity: 1; transform: scale(1) translateY(0); }
+  }
+
+  .question-card::before {
+    content: '❝';
+    position: absolute; top: 18px; left: 24px;
+    font-size: 3rem; color: rgba(74,55,40,0.12);
+    font-family: Georgia, serif; line-height: 1;
+  }
+
+  .question-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1.2rem, 2.5vw, 1.55rem);
+    line-height: 1.7; color: var(--brown);
+    font-style: italic;
+  }
+
+  /* Timer */
+  .timer-wrap {
+    display: flex; align-items: center; gap: 18px;
+    margin-bottom: 28px;
+  }
+  .timer-ring-wrap {
+    position: relative; width: 56px; height: 56px; flex-shrink: 0;
+  }
+  .timer-ring-wrap svg {
+    width: 56px; height: 56px; transform: rotate(-90deg);
+  }
+  .timer-ring-bg {
+    fill: none; stroke: rgba(201,168,76,0.15);
+    stroke-width: 3;
+  }
+  .timer-ring-progress {
+    fill: none; stroke: var(--gold);
+    stroke-width: 3; stroke-linecap: round;
+    stroke-dasharray: 151;
+    stroke-dashoffset: 0;
+    transition: stroke-dashoffset 1s linear, stroke 0.5s ease;
+  }
+  .timer-num {
+    position: absolute; inset: 0;
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Cinzel', serif; font-size: 0.95rem;
+    color: var(--gold);
+  }
+  .timer-label {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 0.95rem; color: rgba(245,233,200,0.4);
+    font-style: italic;
+  }
+
+  /* Nav buttons */
+  .q-nav {
+    display: flex; gap: 14px;
+  }
+  .btn-nav {
+    flex: 1; padding: 14px 20px;
+    background: none;
+    border: 1px solid rgba(201,168,76,0.3);
+    color: rgba(245,233,200,0.6);
+    font-family: 'Cinzel', serif;
+    font-size: 0.72rem; letter-spacing: 0.15em;
+    text-transform: uppercase; cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.25s ease;
+  }
+  .btn-nav:hover { border-color: var(--gold); color: var(--gold); }
+  .btn-nav.primary {
+    background: linear-gradient(135deg, rgba(201,168,76,0.12) 0%, rgba(201,168,76,0.06) 100%);
+    border-color: var(--gold); color: var(--gold);
+  }
+  .btn-nav.primary:hover {
+    background: linear-gradient(135deg, rgba(201,168,76,0.2) 0%, rgba(201,168,76,0.1) 100%);
+    box-shadow: 0 0 16px rgba(201,168,76,0.15);
+  }
+
+  /* ── END SCREEN ── */
+  #end-view {
+    display: none; text-align: center; padding: 40px 0;
+  }
+  .end-icon { font-size: 3rem; margin-bottom: 20px;
+    animation: glow 3s ease-in-out infinite; }
+  .end-title {
+    font-family: 'Cinzel', serif;
+    font-size: 1.8rem; color: var(--gold);
+    letter-spacing: 0.1em; margin-bottom: 14px;
+  }
+  .end-text {
+    font-family: 'Cormorant Garamond', serif;
+    font-style: italic; font-size: 1.15rem;
+    color: rgba(245,233,200,0.6); line-height: 1.8;
+    max-width: 460px; margin: 0 auto 36px;
+  }
+
+  /* Responsive */
+  @media (max-width: 600px) {
+    .parchment-card { padding: 28px 24px; }
+    .config-panel { padding: 24px 22px; }
+    .question-card { padding: 36px 28px; }
+    .config-row { gap: 24px; }
+  }
+</style>
+</head>
+<body>
+
+<div class="bg-texture"></div>
+
+<!-- NAV -->
+<nav>
+  <button class="nav-btn active" onclick="showPage(1)" id="nav1">Ignatianische Spiritualität</button>
+  <div class="nav-divider"></div>
+  <button class="nav-btn" onclick="showPage(2)" id="nav2">Gewissenserforschung</button>
+  <div class="nav-divider"></div>
+  <button class="nav-btn" onclick="showPage(3)" id="nav3">Geistlicher Begleiter</button>
+</nav>
+
+<!-- ════════════════════════════════════════
+     PAGE 1 – IGNATIAN SPIRITUALITY
+════════════════════════════════════════ -->
+<div class="page active" id="page1">
+  <div class="page1-hero">
+    <span class="cross-ornament">✦</span>
+    <h1>Ignatianische Spiritualität</h1>
+    <p class="subtitle">Der Weg nach innen – Gott in allen Dingen finden</p>
+    <div class="divider-ornament"><span>✦</span></div>
+  </div>
+
+  <div class="content-scroll">
+
+    <div class="parchment-card">
+      <h2>Wer war Ignatius von Loyola?</h2>
+      <p>Ignatius von Loyola (1491–1556) war ein spanischer Ritter, der nach einer schweren Verwundung in der Stille der Genesung eine tiefe innere Wandlung erfuhr. Aus dem Soldaten wurde ein Pilger der Seele – einer der einflussreichsten Mystiker der Kirchengeschichte.</p>
+      <p>Er gründete den Jesuitenorden und verfasste die <em>Geistlichen Übungen</em> (<em>Exercitia Spiritualia</em>), ein systematisches Programm zur inneren Erneuerung, das bis heute weltweit praktiziert wird.</p>
+      <p class="latin-quote">„Gott in allen Dingen finden."</p>
+    </div>
+
+    <div class="parchment-card">
+      <h2>Was ist ignatianische Spiritualität?</h2>
+      <p>Ignatianische Spiritualität ist keine Weltflucht, sondern eine Schule der Aufmerksamkeit. Sie lehrt, Gott nicht nur in Kirche und Gebet zu suchen, sondern mitten im Alltag – in der Arbeit, in Begegnungen, in Freude und Schmerz.</p>
+      <p>Ihr Herzstück ist die Überzeugung, dass jeder Mensch unmittelbar von Gott geführt werden kann – durch die sorgfältige Unterscheidung innerer Regungen (Tröstung und Trostlosigkeit), durch Gebet, Reflexion und bewusste Entscheidungen.</p>
+      <p>Die spirituellen Übungen laden dazu ein, das eigene Leben mit Gottes Augen zu betrachten: nicht zur Selbstverurteilung, sondern zur Heilung und Freiheit.</p>
+    </div>
+
+    <div class="parchment-card">
+      <h2>Das Tägliche Examen – Die fünf Schritte</h2>
+      <p>Das <em>Examen</em> ist eine kurze tägliche Gebetsübung (10–15 Minuten), die den Tag in Gottes Gegenwart Revue passieren lässt. Ignatius betrachtete es als das Wichtigste der geistlichen Übungen überhaupt.</p>
+      <br>
+      <ol class="examen-steps">
+        <li class="examen-step">
+          <div class="step-number">I</div>
+          <div class="step-content">
+            <h3>Dankbarkeit</h3>
+            <p>Halte inne und blicke auf den vergangenen Tag. Wofür bist du dankbar? Erkenne die kleinen und großen Gaben – Momente der Freude, der Stärke, der Verbundenheit. Beginne mit einem dankbaren Herzen, denn Dankbarkeit öffnet die Seele.</p>
+          </div>
+        </li>
+        <li class="examen-step">
+          <div class="step-number">II</div>
+          <div class="step-content">
+            <h3>Bitte um Erleuchtung</h3>
+            <p>Bitte Gott um das Licht des Heiligen Geistes, deinen Tag klar und ehrlich sehen zu können – ohne Selbsttäuschung, aber auch ohne harte Verurteilung. Es geht nicht um Anklage, sondern um liebevolle Wahrheit.</p>
+          </div>
+        </li>
+        <li class="examen-step">
+          <div class="step-number">III</div>
+          <div class="step-content">
+            <h3>Rückschau</h3>
+            <p>Gehe den Tag langsam durch – Stunde für Stunde, Begegnung für Begegnung. Wo habe ich Gutes getan? Wo bin ich meinen eigenen Werten untreu geworden? Wo habe ich geliebt, und wo habe ich versagt? Bleib bei dem, was dich innerlich bewegt.</p>
+          </div>
+        </li>
+        <li class="examen-step">
+          <div class="step-number">IV</div>
+          <div class="step-content">
+            <h3>Reue und Vergebung</h3>
+            <p>Erkenne aufrichtig, wo du gefehlt hast – in Wort, Tat oder Unterlassung. Bring diese Last vor Gott und bitte um Vergebung. Nicht in Selbstgeißelung, sondern im Vertrauen auf Gottes unerschöpfliche Barmherzigkeit. Gott richtet nicht – er heilt.</p>
+          </div>
+        </li>
+        <li class="examen-step">
+          <div class="step-number">V</div>
+          <div class="step-content">
+            <h3>Vorsatz und Ausblick</h3>
+            <p>Blicke auf den kommenden Tag. Wo erwarten dich Herausforderungen? Welche Vorsätze möchtest du fassen? Bitte Gott, dich auf dem Weg zu begleiten – und schließe das Examen mit einem kurzen Gebet oder dem Vaterunser.</p>
+          </div>
+        </li>
+      </ol>
+    </div>
+
+    <div class="parchment-card">
+      <h2>Warum das Examen Energie gibt und Lasten abnimmt</h2>
+      <p>Das tägliche Examen wirkt wie ein inneres Aufräumen: Unausgesprochenes, Bereutes, Unverarbeitetes sammelt sich nicht an, sondern wird täglich in Gottes Licht gebracht und losgelassen. Diese Praxis schafft eine tiefe innere Freiheit.</p>
+      <p>Wer regelmäßig innehält und schaut, wie sein Tag war – und ihn nicht einfach stumm verstreichen lässt – lernt sich selbst immer besser kennen. Er entdeckt Muster, Stärken, blinde Flecken. Das ist keine Last, sondern ein Geschenk: das Geschenk der Selbstkenntnis in Gottes Liebe.</p>
+      <p class="latin-quote">„Nimm, Herr, und empfange meine ganze Freiheit."<br>– Ignatius von Loyola</p>
+    </div>
+
+  </div>
+</div><!-- /page1 -->
+
+
+<!-- ════════════════════════════════════════
+     PAGE 2 – QUESTIONS
+════════════════════════════════════════ -->
+<div class="page" id="page2">
+  <div class="page2-inner">
+
+    <div class="page2-header">
+      <span class="cross-ornament">✦</span>
+      <h1>Gewissenserforschung</h1>
+      <p>Fragen für eine ehrliche, heilsame Begegnung mit sich selbst</p>
+    </div>
+
+    <!-- CONFIG -->
+    <div id="config-view">
+      <div class="config-panel">
+        <div class="config-row">
+          <div class="config-group">
+            <label class="config-label">Anzahl der Fragen</label>
+            <div class="slider-track">
+              <input type="range" id="numSlider" min="5" max="20" step="5" value="10"
+                oninput="updateSlider(this, 'numVal')">
+              <span class="slider-value" id="numVal">10</span>
+            </div>
+            <div class="slider-labels"><span>5</span><span>10</span><span>15</span><span>20</span></div>
+          </div>
+
+          <div class="config-group">
+            <label class="config-label">Zeit pro Frage (Sekunden)</label>
+            <div class="slider-track">
+              <input type="range" id="timeSlider" min="10" max="20" step="5" value="15"
+                oninput="updateSlider(this, 'timeVal')">
+              <span class="slider-value" id="timeVal">15 s</span>
+            </div>
+            <div class="slider-labels"><span>10 s</span><span>15 s</span><span>20 s</span></div>
+          </div>
+        </div>
+
+        <div class="speech-toggle">
+          <label class="toggle-switch">
+            <input type="checkbox" id="speechToggle" checked>
+            <div class="toggle-track">
+              <div class="toggle-thumb"></div>
+            </div>
+          </label>
+          <span class="toggle-label">Sprachausgabe der Fragen (falls verfügbar)</span>
+        </div>
+      </div>
+
+      <button class="btn-start" onclick="startSession()">
+        ✦ &nbsp; Erforschung beginnen &nbsp; ✦
+      </button>
+    </div><!-- /config-view -->
+
+    <!-- QUESTION VIEW -->
+    <div id="question-view">
+      <div class="q-progress-bar">
+        <div class="q-progress-fill" id="progressFill" style="width:0%"></div>
+      </div>
+
+      <div class="q-meta">
+        <span class="q-counter" id="qCounter">Frage 1 von 10</span>
+        <span class="q-category" id="qCategory"></span>
+      </div>
+
+      <div class="question-card" id="questionCard">
+        <p class="question-text" id="questionText"></p>
+      </div>
+
+      <div class="timer-wrap">
+        <div class="timer-ring-wrap">
+          <svg viewBox="0 0 56 56">
+            <circle class="timer-ring-bg" cx="28" cy="28" r="24"/>
+            <circle class="timer-ring-progress" id="timerRing" cx="28" cy="28" r="24"/>
+          </svg>
+          <span class="timer-num" id="timerNum">15</span>
+        </div>
+        <span class="timer-label">Sekunden zur Reflexion</span>
+      </div>
+
+      <div class="q-nav">
+        <button class="btn-nav" onclick="skipQuestion()">Überspringen</button>
+        <button class="btn-nav primary" id="btnNext" onclick="nextQuestion()">Nächste Frage →</button>
+      </div>
+    </div><!-- /question-view -->
+
+    <!-- END VIEW -->
+    <div id="end-view">
+      <div class="end-icon">✦</div>
+      <h2 class="end-title">Die Erforschung ist beendet</h2>
+      <p class="end-text">Verweile einen Augenblick in der Stille. Bringe das, was dich berührt hat, vertrauensvoll vor Gott. Er richtet nicht – er heilt.</p>
+      <button class="btn-start" onclick="resetSession()" style="max-width: 300px; margin: 0 auto; display: block;">
+        ✦ &nbsp; Neue Erforschung &nbsp; ✦
+      </button>
+    </div>
+
+  </div>
+</div><!-- /page2 -->
+
+
+<!-- ════════════════════════════════════════
+     PAGE 3 – AI CHAT (Geistlicher Begleiter)
+════════════════════════════════════════ -->
+<div class="page" id="page3">
+  <div class="page2-inner">
+
+    <div class="page2-header">
+      <span class="cross-ornament">✦</span>
+      <h1>Geistlicher Begleiter</h1>
+      <p>Stelle deine Fragen zur ignatianischen Spiritualität</p>
+    </div>
+
+    <!-- Chat Container -->
+    <div id="chat-container" style="
+      max-width: 780px; margin: 0 auto;
+      display: flex; flex-direction: column; gap: 16px;
+    ">
+      <!-- Messages Area -->
+      <div id="chat-messages" style="
+        min-height: 300px; max-height: 520px;
+        overflow-y: auto;
+        padding: 24px;
+        background: linear-gradient(135deg, rgba(245,233,200,0.04) 0%, rgba(245,233,200,0.01) 100%);
+        border: 1px solid rgba(201,168,76,0.2);
+        border-radius: 4px;
+        display: flex; flex-direction: column; gap: 16px;
+      ">
+        <div style="
+          text-align: center;
+          font-family: 'Cormorant Garamond', serif;
+          font-style: italic; font-size: 1rem;
+          color: rgba(245,233,200,0.35);
+          padding: 60px 20px;
+        ">
+          Stelle eine Frage zur ignatianischen Spiritualität, zum Examen oder zur Gewissenserforschung&nbsp;…
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div style="
+        display: flex; gap: 12px; align-items: flex-end;
+      ">
+        <textarea id="chat-input" rows="2" placeholder="Deine Frage …" style="
+          flex: 1;
+          padding: 14px 18px;
+          background: rgba(245,233,200,0.06);
+          border: 1px solid rgba(201,168,76,0.3);
+          border-radius: 4px;
+          color: var(--gold-pale);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 1.05rem;
+          line-height: 1.6;
+          resize: vertical;
+          outline: none;
+          transition: border-color 0.3s;
+        " onfocus="this.style.borderColor='rgba(201,168,76,0.6)'" onblur="this.style.borderColor='rgba(201,168,76,0.3)'"></textarea>
+
+        <button id="chat-send-btn" onclick="sendChatMessage()" style="
+          padding: 14px 24px;
+          background: linear-gradient(135deg, var(--brown) 0%, #2e1f14 100%);
+          border: 1px solid var(--gold);
+          color: var(--gold);
+          font-family: 'Cinzel', serif;
+          font-size: 0.75rem;
+          letter-spacing: 0.15em;
+          text-transform: uppercase;
+          cursor: pointer;
+          border-radius: 4px;
+          transition: all 0.3s ease;
+          white-space: nowrap;
+          min-height: 50px;
+        " onmouseover="this.style.boxShadow='0 0 20px rgba(201,168,76,0.2)'" onmouseout="this.style.boxShadow='none'">
+          Senden
+        </button>
+      </div>
+
+      <!-- Model selector -->
+      <div style="
+        display: flex; justify-content: flex-end; align-items: center; gap: 10px;
+      ">
+        <label style="
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 0.85rem;
+          color: rgba(245,233,200,0.4);
+        ">Modell:</label>
+        <select id="chat-model" style="
+          padding: 6px 12px;
+          background: rgba(245,233,200,0.06);
+          border: 1px solid rgba(201,168,76,0.25);
+          border-radius: 3px;
+          color: var(--gold-pale);
+          font-family: 'Cormorant Garamond', serif;
+          font-size: 0.9rem;
+          outline: none;
+          cursor: pointer;
+        ">
+          <option value="openai/gpt-4o-mini">GPT-4o Mini</option>
+          <option value="anthropic/claude-sonnet-4" selected>Claude Sonnet 4</option>
+          <option value="google/gemini-2.0-flash">Gemini 2.0 Flash</option>
+        </select>
+      </div>
+    </div>
+
+  </div>
+</div><!-- /page3 -->
+
+
+<script>
+// ── DATA ─────────────────────────────────────────────────────────────────────
+const questions = [
+  // Umgang mit dem Nächsten
+  { cat: "Umgang mit dem Nächsten", text: "Habe ich heute jemanden verletzt – durch ein hartes Wort, durch Gleichgültigkeit oder eine unbedachte Geste?" },
+  { cat: "Umgang mit dem Nächsten", text: "War ich heute ein geduldiger und aufmerksamer Zuhörer, oder habe ich andere in ihrem Sprechen unterbrochen oder übergangen?" },
+  { cat: "Umgang mit dem Nächsten", text: "Habe ich heute hinter dem Rücken von jemandem schlecht gesprochen oder Klatsch weitergegeben?" },
+  { cat: "Umgang mit dem Nächsten", text: "Habe ich einen Menschen in meiner Umgebung übersehen, der meine Aufmerksamkeit, meinen Zuspruch oder meine Hilfe gebraucht hätte?" },
+  { cat: "Umgang mit dem Nächsten", text: "Habe ich heute mit echtem Interesse an anderen Menschen gefragt, wie es ihnen geht – oder war meine Frage nur eine Floskel?" },
+  { cat: "Umgang mit dem Nächsten", text: "Habe ich jemandem gegenüber Nachtrag gehalten oder innerlich eine Schuld nicht vergeben, die ich nach außen hin übergangen habe?" },
+
+  // Ehrlichkeit & Integrität
+  { cat: "Ehrlichkeit & Integrität", text: "War ich heute in meinen Worten und Aussagen aufrichtig, oder habe ich etwas beschönigt, übertrieben oder verschwiegen?" },
+  { cat: "Ehrlichkeit & Integrität", text: "Habe ich heute eine Wahrheit zurückgehalten, um mir selbst einen Vorteil zu verschaffen oder einer unangenehmen Situation auszuweichen?" },
+  { cat: "Ehrlichkeit & Integrität", text: "Habe ich in meiner Arbeit oder meinen Pflichten so gehandelt, wie ich es auch täte, wenn andere mir zusähen?" },
+  { cat: "Ehrlichkeit & Integrität", text: "Gibt es in meinem Leben einen Bereich, in dem ich mir selbst gegenüber nicht ehrlich bin – eine Schwäche, eine Sucht, eine Vermeidung?" },
+  { cat: "Ehrlichkeit & Integrität", text: "Habe ich heute Versprechen gehalten, die ich gegeben habe – oder habe ich Zusagen leichtfertig gemacht, die ich nicht einhalten konnte?" },
+  { cat: "Ehrlichkeit & Integrität", text: "Habe ich mich heute so verhalten, dass mein Handeln mit meinen eigenen Werten und meiner innersten Überzeugung übereinstimmt?" },
+
+  // Zeit & Talente
+  { cat: "Zeit & Talente", text: "Habe ich meine Zeit heute bewusst und sinnvoll gestaltet – oder habe ich sie zerstreut, vertändelt oder für Dinge genutzt, die mich nicht wirklich erfüllen?" },
+  { cat: "Zeit & Talente", text: "Habe ich heute meine Fähigkeiten und Talente zum Wohl anderer Menschen eingesetzt, oder habe ich sie aus Bequemlichkeit oder Angst zurückgehalten?" },
+  { cat: "Zeit & Talente", text: "Gibt es ein Gutes, das ich heute hätte tun können und das ich unterlassen habe – weil es mir zu aufwändig, zu unbequem oder zu unwichtig erschien?" },
+  { cat: "Zeit & Talente", text: "Habe ich heute etwas getan, das mich wirklich lebendig gemacht hat – und habe ich Raum gelassen für das, was mir im Tiefsten wichtig ist?" },
+  { cat: "Zeit & Talente", text: "Wie gehe ich mit meinen körperlichen und seelischen Kräften um? Pflege ich mich gut, oder überfordere ich mich – oder lasse ich mich von Trägheit lähmen?" },
+
+  // Innere Haltungen
+  { cat: "Innere Haltungen & Gedanken", text: "Habe ich heute Neid oder Missgunst in mir bemerkt – wenn andere erfolgreich, glücklich oder anerkannt waren?" },
+  { cat: "Innere Haltungen & Gedanken", text: "Habe ich Zorn oder Ungeduld in mir aufsteigen lassen und ihm nachgegeben, statt innezuhalten und bewusst zu reagieren?" },
+  { cat: "Innere Haltungen & Gedanken", text: "War mein Herz heute von Hochmut bewegt – dem Wunsch, besser dazustehen, mehr beachtet zu werden, recht zu behalten?" },
+  { cat: "Innere Haltungen & Gedanken", text: "Habe ich heute Angst, Sorge oder innere Unruhe als Antrieb genutzt – oder habe ich gelernt, sie loszulassen und Gott zu vertrauen?" },
+  { cat: "Innere Haltungen & Gedanken", text: "Gibt es Gedanken oder Fantasien, denen ich mich heute hingegeben habe und die mir innerlich nicht gutgetan haben?" },
+  { cat: "Innere Haltungen & Gedanken", text: "Habe ich mich heute mit anderen verglichen – in Aussehen, Erfolg, Anerkennung – und mich dabei selbst kleingeredet oder andere abgewertet?" },
+
+  // Beziehung zu Gott
+  { cat: "Beziehung zu Gott", text: "Habe ich heute Gott in meinem Alltag Raum gegeben – in einem Moment der Stille, eines Gebetes oder einer bewussten Dankbarkeit?" },
+  { cat: "Beziehung zu Gott", text: "Habe ich versucht, heute alles allein aus eigener Kraft zu bewältigen – ohne Gott um Führung, Kraft oder Klarheit zu bitten?" },
+  { cat: "Beziehung zu Gott", text: "Gibt es einen Bereich meines Lebens, in dem ich Gott nicht hineinlasse – weil ich Kontrolle nicht abgeben möchte oder zu viel Angst habe?" },
+  { cat: "Beziehung zu Gott", text: "Habe ich heute Momente erlebt, die mich an Gottes Gegenwart erinnert haben – und habe ich diese Augenblicke bewusst wahrgenommen?" },
+  { cat: "Beziehung zu Gott", text: "Lebe ich meinen Glauben wirklich – im Alltag, in meinen Entscheidungen, in meinem Umgang mit anderen – oder ist er ein sonntägliches Bekenntnis geblieben?" },
+
+  // Familie & nahe Beziehungen
+  { cat: "Familie & nahe Beziehungen", text: "Bin ich heute denjenigen, die mir am nächsten stehen, wirklich gerecht geworden – in meiner Zeit, meiner Aufmerksamkeit, meiner Wärme?" },
+  { cat: "Familie & nahe Beziehungen", text: "Habe ich heute jemandem in meiner Familie oder Freundschaft ein ehrliches Dankeschön oder ein aufrichtiges Wort der Wertschätzung geschenkt?" },
+  { cat: "Familie & nahe Beziehungen", text: "Gibt es in einer wichtigen Beziehung etwas Unausgesprochenes – einen Konflikt, eine Verletzung – das ich schon zu lange mit mir trage?" },
+
+  // Gesellschaft & Verantwortung
+  { cat: "Verantwortung & Gesellschaft", text: "Habe ich heute als Mitglied der Gesellschaft verantwortungsbewusst gehandelt – gegenüber Schwächeren, Fremden, der Schöpfung?" },
+  { cat: "Verantwortung & Gesellschaft", text: "Habe ich heute achtlos mit Ressourcen umgegangen – Essen, Energie, Zeit, Geld – ohne deren Herkunft und Wert zu bedenken?" },
+  { cat: "Verantwortung & Gesellschaft", text: "Habe ich einen Moment gesehen, in dem ich hätte für Gerechtigkeit eintreten können – und habe ich geschwiegen oder weggesehen?" },
+];
+
+// ── STATE ─────────────────────────────────────────────────────────────────────
+let sessionQuestions = [];
+let currentIndex = 0;
+let totalCount = 10;
+let timePerQ = 15;
+let useSpeech = true;
+let timerInterval = null;
+let timerLeft = 0;
+const circumference = 2 * Math.PI * 24; // r=24
+let germanVoice = null;
+
+// ── DEUTSCHE STIMME LADEN ──────────────────────────────────────────────────────
+function loadGermanVoice() {
+  if (!('speechSynthesis' in window)) return;
+  const pick = () => {
+    const voices = window.speechSynthesis.getVoices();
+    if (!voices.length) return;
+
+    // Prioritätsliste: echte deutsche Stimmen bevorzugen
+    const preferred = [
+      // macOS / iOS
+      v => v.name === 'Anna',
+      v => v.name === 'Petra',
+      v => v.name === 'Markus',
+      v => v.name === 'Yannick',
+      v => v.name === 'Dorothee',
+      // Windows
+      v => v.name.includes('Hedda'),
+      v => v.name.includes('Stefan'),
+      v => v.name.includes('Katja'),
+      v => v.name.includes('Hanna'),
+      // Android / Chrome
+      v => v.name.toLowerCase().includes('google deutsch'),
+      v => v.name.toLowerCase().includes('google de'),
+      // Fallback: alles mit de-DE oder de-AT oder de-CH
+      v => v.lang === 'de-DE',
+      v => v.lang === 'de-AT',
+      v => v.lang === 'de-CH',
+      v => v.lang.startsWith('de'),
+    ];
+    for (const test of preferred) {
+      const found = voices.find(test);
+      if (found) { germanVoice = found; return; }
+    }
+  };
+  pick();
+  if (!germanVoice) {
+    window.speechSynthesis.onvoiceschanged = () => { pick(); };
+  }
+}
+loadGermanVoice();
+
+// ── SLIDER UPDATE ──────────────────────────────────────────────────────────────
+function updateSlider(el, valId) {
+  const val = parseInt(el.value);
+  const isTime = valId === 'timeVal';
+  document.getElementById(valId).textContent = isTime ? val + ' s' : val;
+  // update gradient
+  const min = parseInt(el.min), max = parseInt(el.max);
+  const pct = ((val - min) / (max - min)) * 100;
+  el.style.setProperty('--pct', pct + '%');
+}
+// init slider gradients
+window.addEventListener('load', () => {
+  ['numSlider','timeSlider'].forEach(id => {
+    const el = document.getElementById(id);
+    const min = parseInt(el.min), max = parseInt(el.max), val = parseInt(el.value);
+    const pct = ((val - min) / (max - min)) * 100;
+    el.style.setProperty('--pct', pct + '%');
+  });
+});
+
+// ── PAGE SWITCH ────────────────────────────────────────────────────────────────
+function showPage(n) {
+  document.getElementById('page1').classList.remove('active');
+  document.getElementById('page2').classList.remove('active');
+  document.getElementById('page3').classList.remove('active');
+  document.getElementById('nav1').classList.remove('active');
+  document.getElementById('nav2').classList.remove('active');
+  document.getElementById('nav3').classList.remove('active');
+  document.getElementById('page'+n).classList.add('active');
+  document.getElementById('nav'+n).classList.add('active');
+}
+
+// ── SESSION ────────────────────────────────────────────────────────────────────
+function startSession() {
+  totalCount = parseInt(document.getElementById('numSlider').value);
+  timePerQ = parseInt(document.getElementById('timeSlider').value);
+  useSpeech = document.getElementById('speechToggle').checked;
+
+  // shuffle
+  const shuffled = [...questions].sort(() => Math.random() - 0.5);
+  sessionQuestions = shuffled.slice(0, totalCount);
+  currentIndex = 0;
+
+  document.getElementById('config-view').style.display = 'none';
+  document.getElementById('end-view').style.display = 'none';
+  document.getElementById('question-view').style.display = 'block';
+
+  showQuestion();
+}
+
+function showQuestion() {
+  if (currentIndex >= sessionQuestions.length) {
+    endSession(); return;
+  }
+  clearTimerInterval();
+
+  const q = sessionQuestions[currentIndex];
+  document.getElementById('qCounter').textContent = `Frage ${currentIndex+1} von ${totalCount}`;
+  document.getElementById('qCategory').textContent = q.cat;
+  document.getElementById('questionText').textContent = q.text;
+
+  // Animate card
+  const card = document.getElementById('questionCard');
+  card.style.animation = 'none';
+  card.offsetHeight; // reflow
+  card.style.animation = 'questionIn 0.6s ease';
+
+  // Progress
+  document.getElementById('progressFill').style.width = ((currentIndex) / totalCount * 100) + '%';
+
+  // Speech
+  if (useSpeech && 'speechSynthesis' in window) {
+    window.speechSynthesis.cancel();
+    const utter = new SpeechSynthesisUtterance(q.text);
+    utter.lang = 'de-DE';
+    utter.rate = 0.88;
+    utter.pitch = 1;
+    if (germanVoice) utter.voice = germanVoice;
+    window.speechSynthesis.speak(utter);
+  }
+
+  // Timer
+  startTimer(timePerQ);
+}
+
+function startTimer(seconds) {
+  timerLeft = seconds;
+  updateTimerDisplay(seconds, seconds);
+
+  timerInterval = setInterval(() => {
+    timerLeft--;
+    updateTimerDisplay(timerLeft, seconds);
+    if (timerLeft <= 0) {
+      clearTimerInterval();
+      setTimeout(() => nextQuestion(), 400);
+    }
+  }, 1000);
+}
+
+function updateTimerDisplay(left, total) {
+  document.getElementById('timerNum').textContent = left;
+  const offset = circumference * (1 - left / total);
+  document.getElementById('timerRing').style.strokeDashoffset = offset;
+  // color shift
+  const ratio = left / total;
+  const hue = ratio > 0.4 ? '#c9a84c' : '#8b2e2e';
+  document.getElementById('timerRing').style.stroke = hue;
+}
+
+function clearTimerInterval() {
+  if (timerInterval) { clearInterval(timerInterval); timerInterval = null; }
+  if ('speechSynthesis' in window) window.speechSynthesis.cancel();
+}
+
+function nextQuestion() {
+  clearTimerInterval();
+  currentIndex++;
+  showQuestion();
+}
+
+function skipQuestion() {
+  clearTimerInterval();
+  currentIndex++;
+  showQuestion();
+}
+
+function endSession() {
+  clearTimerInterval();
+  document.getElementById('question-view').style.display = 'none';
+  const ev = document.getElementById('end-view');
+  ev.style.display = 'block';
+  document.getElementById('progressFill').style.width = '100%';
+}
+
+function resetSession() {
+  document.getElementById('end-view').style.display = 'none';
+  document.getElementById('config-view').style.display = 'block';
+  document.getElementById('progressFill').style.width = '0%';
+}
+
+// ── AI CHAT (Straico via Cloudflare Worker Proxy) ────────────────────────────
+// ╔═══════════════════════════════════════════════════════════════════════╗
+// ║  WICHTIG: Trage hier die URL deines Cloudflare Workers ein!         ║
+// ║  Anleitung: siehe cloudflare-worker.js                              ║
+// ║                                                                     ║
+// ║  Der API-Key ist SICHER im Worker gespeichert –                     ║
+// ║  er taucht NICHT in dieser HTML-Datei auf.                          ║
+// ╚═══════════════════════════════════════════════════════════════════════╝
+const PROXY_URL = 'https://straico.jugem.workers.dev';  // z.B. 'https://straico-proxy.deinname.workers.dev'
+
+const SYSTEM_CONTEXT = `Du bist ein einfühlsamer geistlicher Begleiter in der Tradition der ignatianischen Spiritualität. 
+Du hilfst Menschen bei Fragen zum Examen, zur Gewissenserforschung, zur Unterscheidung der Geister und zum geistlichen Leben. 
+Antworte warmherzig, klar und auf Deutsch. Beziehe dich, wo passend, auf die Lehre des Ignatius von Loyola.
+Halte deine Antworten fokussiert und nicht zu lang.`;
+
+let chatHistory = [];
+
+function addChatBubble(text, isUser) {
+  const messagesDiv = document.getElementById('chat-messages');
+
+  // Remove placeholder if present
+  const placeholder = messagesDiv.querySelector('div[style*="text-align: center"]');
+  if (placeholder) placeholder.remove();
+
+  const bubble = document.createElement('div');
+  bubble.style.cssText = `
+    max-width: 85%;
+    padding: 16px 20px;
+    border-radius: 4px;
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.05rem;
+    line-height: 1.75;
+    animation: fadeUp 0.4s ease both;
+    white-space: pre-wrap;
+    word-wrap: break-word;
+    ${isUser ? `
+      align-self: flex-end;
+      background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.08) 100%);
+      border: 1px solid rgba(201,168,76,0.3);
+      color: var(--gold-pale);
+    ` : `
+      align-self: flex-start;
+      background: linear-gradient(135deg, var(--parchment) 0%, var(--parchment-dark) 100%);
+      border: 1px solid rgba(201,168,76,0.35);
+      color: var(--brown);
+    `}
+  `;
+  bubble.textContent = text;
+  messagesDiv.appendChild(bubble);
+  messagesDiv.scrollTop = messagesDiv.scrollHeight;
+  return bubble;
+}
+
+function addLoadingBubble() {
+  const bubble = addChatBubble('…', false);
+  bubble.id = 'loading-bubble';
+  bubble.style.fontStyle = 'italic';
+  bubble.style.color = 'rgba(74,55,40,0.5)';
+  bubble.textContent = 'Der Begleiter denkt nach …';
+  return bubble;
+}
+
+async function callStraico(model, fullPrompt) {
+  // Prüfe ob Worker-URL konfiguriert ist
+  if (!PROXY_URL || PROXY_URL === 'DEINE_WORKER_URL_HIER') {
+    throw new Error('Bitte trage die URL deines Cloudflare Workers in der HTML-Datei bei PROXY_URL ein. Siehe Anleitung in cloudflare-worker.js.');
+  }
+
+  const resp = await fetch(PROXY_URL, {
+    method: 'POST',
+    headers: {
+      'Content-Type': 'application/json',
+    },
+    body: JSON.stringify({
+      models: [model],
+      message: fullPrompt
+    })
+  });
+
+  if (!resp.ok) {
+    const errText = await resp.text().catch(() => 'Unbekannter Fehler');
+    throw new Error(`API-Fehler ${resp.status}: ${errText}`);
+  }
+
+  return await resp.json();
+}
+
+async function sendChatMessage() {
+  const input = document.getElementById('chat-input');
+  const sendBtn = document.getElementById('chat-send-btn');
+  const userText = input.value.trim();
+  if (!userText) return;
+
+  // Show user message
+  addChatBubble(userText, true);
+  input.value = '';
+  input.style.height = 'auto';
+
+  // Disable input while waiting
+  sendBtn.disabled = true;
+  sendBtn.style.opacity = '0.5';
+  input.disabled = true;
+
+  // Show loading
+  addLoadingBubble();
+
+  // Build prompt with context
+  chatHistory.push({ role: 'user', content: userText });
+  const fullPrompt = SYSTEM_CONTEXT + '\n\n' + chatHistory.map(m =>
+    (m.role === 'user' ? 'Benutzer: ' : 'Begleiter: ') + m.content
+  ).join('\n\n') + '\n\nBegleiter:';
+
+  const model = document.getElementById('chat-model').value;
+
+  try {
+    const data = await callStraico(model, fullPrompt);
+
+    // Remove loading bubble
+    const loadingEl = document.getElementById('loading-bubble');
+    if (loadingEl) loadingEl.remove();
+
+    // Extract answer – try multiple response formats
+    let answer = '';
+    if (data?.data?.completion?.choices?.[0]?.message?.content) {
+      answer = data.data.completion.choices[0].message.content;
+    } else if (data?.data?.completions) {
+      const firstKey = Object.keys(data.data.completions)[0];
+      if (firstKey) {
+        answer = data.data.completions[firstKey]?.completion?.choices?.[0]?.message?.content || '';
+      }
+    } else if (data?.completion?.choices?.[0]?.message?.content) {
+      answer = data.completion.choices[0].message.content;
+    }
+
+    if (!answer) {
+      answer = 'Es tut mir leid, ich konnte keine Antwort generieren. Bitte versuche es erneut.';
+      console.log('Straico response:', JSON.stringify(data));
+    }
+
+    // Clean up potential prefix
+    answer = answer.replace(/^Begleiter:\s*/i, '');
+
+    chatHistory.push({ role: 'assistant', content: answer });
+    addChatBubble(answer, false);
+
+  } catch (err) {
+    const loadingEl = document.getElementById('loading-bubble');
+    if (loadingEl) loadingEl.remove();
+    addChatBubble('Verbindungsfehler: ' + err.message, false);
+    console.error('Straico error:', err);
+  }
+
+  // Re-enable input
+  sendBtn.disabled = false;
+  sendBtn.style.opacity = '1';
+  input.disabled = false;
+  input.focus();
+}
+
+// Enter to send (Shift+Enter for newline)
+document.addEventListener('DOMContentLoaded', () => {
+  const input = document.getElementById('chat-input');
+  if (input) {
+    input.addEventListener('keydown', (e) => {
+      if (e.key === 'Enter' && !e.shiftKey) {
+        e.preventDefault();
+        sendChatMessage();
+      }
+    });
+  }
+});
+</script>
+</body>
+</html>
