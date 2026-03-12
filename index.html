@@ -1043,7 +1043,7 @@ function resetSession() {
 // ║  Der API-Key ist SICHER im Worker gespeichert –                     ║
 // ║  er taucht NICHT in dieser HTML-Datei auf.                          ║
 // ╚═══════════════════════════════════════════════════════════════════════╝
-const PROXY_URL = 'https://straico.jugem.workers.dev';  // z.B. 'https://straico-proxy.deinname.workers.dev'
+const PROXY_URL = 'DEINE_WORKER_URL_HIER';  // z.B. 'https://straico-proxy.deinname.workers.dev'
 
 const SYSTEM_CONTEXT = `Du bist ein einfühlsamer geistlicher Begleiter in der Tradition der ignatianischen Spiritualität. 
 Du hilfst Menschen bei Fragen zum Examen, zur Gewissenserforschung, zur Unterscheidung der Geister und zum geistlichen Leben. 
@@ -1051,6 +1051,98 @@ Antworte warmherzig, klar und auf Deutsch. Beziehe dich, wo passend, auf die Leh
 Halte deine Antworten fokussiert und nicht zu lang.`;
 
 let chatHistory = [];
+
+// ── Leichtgewichtiger Markdown → HTML Renderer ──────────────────────────────
+function renderMarkdown(md) {
+  let html = md;
+
+  // Code-Blöcke (```...```) zuerst schützen
+  const codeBlocks = [];
+  html = html.replace(/```(\w*)\n?([\s\S]*?)```/g, (_, lang, code) => {
+    const idx = codeBlocks.length;
+    codeBlocks.push(`<pre style="
+      background: rgba(74,55,40,0.08);
+      border: 1px solid rgba(74,55,40,0.15);
+      border-radius: 3px;
+      padding: 12px 16px;
+      margin: 10px 0;
+      overflow-x: auto;
+      font-family: 'Courier New', monospace;
+      font-size: 0.9rem;
+      line-height: 1.5;
+      white-space: pre-wrap;
+    "><code>${code.replace(/</g,'&lt;').replace(/>/g,'&gt;').trim()}</code></pre>`);
+    return `%%CODEBLOCK_${idx}%%`;
+  });
+
+  // Inline-Code (`...`)
+  html = html.replace(/`([^`]+)`/g, `<code style="
+    background: rgba(74,55,40,0.08);
+    padding: 2px 5px;
+    border-radius: 2px;
+    font-family: 'Courier New', monospace;
+    font-size: 0.9em;
+  ">$1</code>`);
+
+  // Überschriften
+  html = html.replace(/^#### (.+)$/gm, `<h4 style="font-family:'Cinzel',serif; font-size:0.9rem; letter-spacing:0.08em; color:var(--brown); margin:16px 0 8px; text-transform:uppercase;">$1</h4>`);
+  html = html.replace(/^### (.+)$/gm, `<h3 style="font-family:'Cinzel',serif; font-size:0.95rem; letter-spacing:0.08em; color:var(--brown); margin:18px 0 8px; text-transform:uppercase;">$1</h3>`);
+  html = html.replace(/^## (.+)$/gm, `<h2 style="font-family:'Cinzel',serif; font-size:1rem; letter-spacing:0.1em; color:var(--brown); margin:20px 0 10px; text-transform:uppercase;">$1</h2>`);
+  html = html.replace(/^# (.+)$/gm, `<h2 style="font-family:'Cinzel',serif; font-size:1.05rem; letter-spacing:0.1em; color:var(--brown); margin:20px 0 10px; text-transform:uppercase;">$1</h2>`);
+
+  // Fett & Kursiv
+  html = html.replace(/\*\*\*(.+?)\*\*\*/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
+  html = html.replace(/\*(.+?)\*/g, '<em>$1</em>');
+  html = html.replace(/___(.+?)___/g, '<strong><em>$1</em></strong>');
+  html = html.replace(/__(.+?)__/g, '<strong>$1</strong>');
+  html = html.replace(/_(.+?)_/g, '<em>$1</em>');
+
+  // Horizontale Linie
+  html = html.replace(/^---+$/gm, `<hr style="border:none; border-top:1px solid rgba(74,55,40,0.15); margin:16px 0;">`);
+
+  // Ungeordnete Listen (- oder *)
+  html = html.replace(/^(?:[-*])\s+(.+)$/gm, `<li style="margin:4px 0; margin-left:20px; list-style-type:disc;">$1</li>`);
+
+  // Geordnete Listen (1. 2. 3.)
+  html = html.replace(/^\d+\.\s+(.+)$/gm, `<li style="margin:4px 0; margin-left:20px; list-style-type:decimal;">$1</li>`);
+
+  // Aufeinanderfolgende <li> in <ul>/<ol> gruppieren
+  html = html.replace(/((?:<li style="[^"]*list-style-type:disc[^"]*">[^<]*<\/li>\s*)+)/g, `<ul style="margin:8px 0; padding-left:4px;">$1</ul>`);
+  html = html.replace(/((?:<li style="[^"]*list-style-type:decimal[^"]*">[^<]*<\/li>\s*)+)/g, `<ol style="margin:8px 0; padding-left:4px;">$1</ol>`);
+
+  // Blockzitate
+  html = html.replace(/^>\s*(.+)$/gm, `<blockquote style="
+    border-left: 3px solid var(--gold);
+    padding: 4px 14px;
+    margin: 10px 0;
+    font-style: italic;
+    color: var(--brown-light);
+  ">$1</blockquote>`);
+
+  // Absätze: Doppelte Zeilenumbrüche → <p>
+  html = html.split(/\n{2,}/).map(block => {
+    block = block.trim();
+    if (!block) return '';
+    // Nicht wrappen wenn schon HTML-Block
+    if (/^<(h[1-4]|ul|ol|li|pre|blockquote|hr|div)/.test(block) || block.startsWith('%%CODEBLOCK')) {
+      return block;
+    }
+    return `<p style="margin:8px 0;">${block}</p>`;
+  }).join('\n');
+
+  // Einzelne Zeilenumbrüche innerhalb von <p> → <br>
+  html = html.replace(/(<p[^>]*>)([\s\S]*?)(<\/p>)/g, (_, open, content, close) => {
+    return open + content.replace(/\n/g, '<br>') + close;
+  });
+
+  // Code-Blöcke wieder einsetzen
+  codeBlocks.forEach((block, i) => {
+    html = html.replace(`%%CODEBLOCK_${i}%%`, block);
+  });
+
+  return html;
+}
 
 function addChatBubble(text, isUser) {
   const messagesDiv = document.getElementById('chat-messages');
@@ -1068,9 +1160,9 @@ function addChatBubble(text, isUser) {
     font-size: 1.05rem;
     line-height: 1.75;
     animation: fadeUp 0.4s ease both;
-    white-space: pre-wrap;
     word-wrap: break-word;
     ${isUser ? `
+      white-space: pre-wrap;
       align-self: flex-end;
       background: linear-gradient(135deg, rgba(201,168,76,0.15) 0%, rgba(201,168,76,0.08) 100%);
       border: 1px solid rgba(201,168,76,0.3);
@@ -1082,7 +1174,13 @@ function addChatBubble(text, isUser) {
       color: var(--brown);
     `}
   `;
-  bubble.textContent = text;
+
+  if (isUser) {
+    bubble.textContent = text;
+  } else {
+    bubble.innerHTML = renderMarkdown(text);
+  }
+
   messagesDiv.appendChild(bubble);
   messagesDiv.scrollTop = messagesDiv.scrollHeight;
   return bubble;
